@@ -4,30 +4,21 @@ An educational text-classification project that predicts whether a news headline
 
 > **Disclaimer:** This is an educational classifier, not a fact-checking system. Predictions should not be treated as proof of truth or falsity.
 
-## Project Overview
-- Clean and preprocess news text
-- Convert text into numerical features using TF-IDF
-- Train and compare machine-learning models
-- Evaluate using accuracy, precision, recall, F1-score and a confusion matrix
-- Make predictions through a Streamlit interface
+## Features
+- Text cleaning and TF-IDF vectorization
+- Comparison of Logistic Regression, Multinomial Naive Bayes, and Linear SVM
+- Evaluation using accuracy, precision, recall, F1-score, classification report, and confusion matrix
+- Streamlit interface for interactive classification
+- Linear SVM decision-margin display (explicitly not presented as probability)
+- Separate transparent text-pattern signals for urgency, sharing pressure, alarmist language, and similar patterns
+- Verification checklist to encourage checking claims independently
 
 ## Dataset
-The scripts expect a CSV named `News_dataset.csv` with `title` and `label` columns. Label convention used in the original notebook:
+The training script expects a CSV named `News_dataset.csv` with `title` and `label` columns. Label convention used in the project:
 - `0`: Fake
 - `1`: Real
 
-**Dataset is not included** in this repository. Download it from the source you used and place it in the project root. Follow the dataset provider's license/terms.
-
-## Repository Structure
-```
-├── Fake News Classification.ipynb
-├── train_model.py
-├── app.py
-├── requirements.txt
-├── .gitignore
-├── README.md
-└── News_dataset.csv  (local only; not committed)
-```
+Dataset is not included. Obtain it from your original source, place it in the project root, and follow its license/terms.
 
 ## Setup
 1. Clone:
@@ -35,11 +26,11 @@ The scripts expect a CSV named `News_dataset.csv` with `title` and `label` colum
    git clone https://github.com/jeetpatilprofessional-blip/Fake-News-Detection-NLP-ML.git
    cd Fake-News-Detection-NLP-ML
    ```
-2. Create a virtual environment:
+2. Create and activate a virtual environment:
    ```bash
    python -m venv .venv
    ```
-   Activate it on Windows:
+   Windows:
    ```bash
    .venv\\Scripts\\activate
    ```
@@ -47,39 +38,43 @@ The scripts expect a CSV named `News_dataset.csv` with `title` and `label` colum
    ```bash
    source .venv/bin/activate
    ```
-3. Install dependencies:
+3. Install:
    ```bash
    pip install -r requirements.txt
    ```
 4. Place `News_dataset.csv` in the project root.
-5. Train and evaluate:
+5. Train:
    ```bash
    python train_model.py
    ```
-6. Launch the app:
+6. Launch:
    ```bash
    streamlit run app.py
    ```
 
 ## Methodology
-1. Load the dataset and select title and label fields.
-2. Remove missing records and duplicate titles.
-3. Split into train and test sets **before fitting vectorization**.
-4. Use TF-IDF within a scikit-learn Pipeline to avoid test-data leakage.
+1. Load and select title and label fields.
+2. Remove missing rows and duplicate titles.
+3. Split into train and test sets before fitting vectorization.
+4. Fit TF-IDF inside a scikit-learn pipeline.
 5. Compare Logistic Regression, Multinomial Naive Bayes, and Linear SVM.
-6. Evaluate the models and save the best pipeline.
+6. Save the best pipeline by weighted F1.
 
-## Evaluation
-The training script prints accuracy, precision, recall, F1-score, classification report, and confusion matrix. Actual results are generated when run on your dataset; no performance numbers are claimed in advance.
+## Interpreting the app
+- **Model prediction:** The output of the trained classifier.
+- **Decision margin:** Signed distance-like score returned by Linear SVM; it is not a probability and is not calibrated confidence.
+- **Text-pattern signals:** Simple keyword/phrase patterns shown separately. They do not change the ML prediction and do not establish truth.
+- **Verification checklist:** Suggested manual steps for checking claims.
 
 ## Limitations
-- The model learns patterns in its dataset and may not generalize to other sources.
-- Headlines may not contain sufficient context.
-- Satire, bias, language variation, and evolving events complicate classification.
-- A prediction is not a substitute for checking trustworthy sources.
+- Learns dataset-specific language patterns, not truth.
+- Headlines may not contain enough context.
+- False positives and false negatives are possible.
+- The heuristic signals are simplistic and may flag legitimate content or miss misinformation.
+- No live source checking or fact verification is performed.
 
 ## Tech Stack
-Python, Pandas, scikit-learn, Streamlit.
+Python, Pandas, scikit-learn, Streamlit, Joblib.
 
 ## Author
 Jeet Patil
