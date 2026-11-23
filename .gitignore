@@ -1,0 +1,22 @@
+# Dataset / local data
+News_dataset.csv
+*.csv
+
+# Model artifacts
+*.joblib
+*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
